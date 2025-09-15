@@ -6,6 +6,12 @@ Learning/playground repository that shows a FastAPI service shipped with CI → 
 
 ## Run locally
 
+### Run unit test
+
+```bash
+task test
+```
+
 ### Start server
 
 ```bash
