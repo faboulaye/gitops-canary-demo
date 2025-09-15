@@ -8,10 +8,11 @@ app = FastAPI(title="gitops-canary-demo")
 @app.get("/manifest")
 def manifest():
     return {
-    "name": os.getenv("APP_NAME", "gitops-canary-demo"),
+    "name": os.getenv("APP_NAME", "unknown"),
     "version": os.getenv("APP_VERSION", "unknown"),
-    "buildTag": os.getenv("BUILD_TAG", "unknown"),
-    "commit": os.getenv("GIT_COMMIT", os.getenv("BUILD_TAG", "unknown")),
+    "commit": os.getenv("GIT_COMMIT", "unknown"),
+    "repository": os.getenv("GIT_REPO", "unknown"),
+    "build_time": os.getenv("BUILD_TIME", "unknown"),
     }
 
 
