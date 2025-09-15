@@ -1,0 +1,41 @@
+version: "3"
+
+# Global variables
+vars:
+  REGISTRY: ghcr.io
+  IMAGE_REPO: "github.io/faboulaye/gitops-canary-demo"
+  NAMESPACE: apps
+  PY: python
+  PIP: pip
+  GIT_TAG: git describe --tags --abbrev=0 2>/dev/null || echo 0.0.0
+  GIT_SHA: git rev-parse --short HEAD
+  IMAGE_TAG: echo "$(git describe --tags --abbrev=0 2>/dev/null || echo 0.0.0)-$(git rev-parse --short HEAD)"
+  IMAGE: echo "{{.IMAGE_REPO}}:$(echo {{.IMAGE_TAG}})"
+
+# Run: task <name>
+tasks:
+  default:
+    desc: Show common tasks
+    cmds:
+      - task -l
+
+  # ---------- Local dev ----------
+  deps:
+    desc: Install local Python deps
+    run: once
+    cmds:
+      - |
+        {{.PIP}} install --upgrade pip
+      - |
+        {{.PIP}} install -r app/requirements.txt
+
+  run:
+    desc: Run the app locally
+    deps: [deps]
+    interactive: true
+    env:
+      APP_VERSION: "{{.GIT_TAG}}"
+      BUILD_TAG: "{{.GIT_SHA}}"
+    cmds:
+      - |
+        {{.PY}} -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
