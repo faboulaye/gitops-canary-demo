@@ -66,7 +66,7 @@ jobs:
           build-args: |
             APP_NAME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.title'] }}
             APP_VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
-            GIT_REPO=${{ github.repositoryUrl }}
+            GIT_REPO=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.source'] }}
             GIT_COMMIT=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
             BUILD_TIME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
 

@@ -7,10 +7,10 @@ vars:
   NAMESPACE: apps
   PY: python
   PIP: pip
-  GIT_TAG: git describe --tags --abbrev=0 2>/dev/null || echo 0.0.0
-  GIT_SHA: git rev-parse --short HEAD
-  IMAGE_TAG: echo "$(git describe --tags --abbrev=0 2>/dev/null || echo 0.0.0)-$(git rev-parse --short HEAD)"
-  IMAGE: echo "{{.IMAGE_REPO}}:$(echo {{.IMAGE_TAG}})"
+  GIT_COMMIT:
+    sh: git rev-parse HEAD
+  APP_VERSION:
+    sh: echo "$(git describe --tags --abbrev=0 2>/dev/null || echo 0.0.0)-$(git rev-parse --short HEAD)"
 
 # Run: task <name>
 tasks:
@@ -34,8 +34,8 @@ tasks:
     deps: [deps]
     interactive: true
     env:
-      APP_VERSION: "{{.GIT_TAG}}"
-      BUILD_TAG: "{{.GIT_SHA}}"
+      APP_VERSION: "{{.APP_VERSION}}"
+      GIT_COMMIT: "{{.GIT_COMMIT}}"
     cmds:
       - |
         {{.PY}} -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
