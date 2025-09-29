@@ -2,10 +2,15 @@ name: Release
 on:
   workflow_dispatch:
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  PYTHON_VERSION: "3.13"
+
 jobs:
   release:
     permissions:
-      contents: read
+      contents: write
       issues: write
       pull-requests: write
     runs-on: ubuntu-latest
