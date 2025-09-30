@@ -14,8 +14,16 @@ testpaths = ["tests"]
 version_toml = ["pyproject.toml:project.version"]
 commit_parser = "conventional"
 
+[tool.semantic_release.branches.main]
+match = "develop"
+
 [tool.semantic_release.branches.alpha]
 match = "^(feat|fix|perf)/.+"
+prerelease = true
+prerelease_token = "alpha"
+
+[tool.semantic_release.branches.temp_fix]
+match = "^fix_release_pipeline$"
 prerelease = true
 prerelease_token = "alpha"
 
