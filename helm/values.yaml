@@ -1,0 +1,38 @@
+image:
+  repository: ghcr.io/faboulaye/gitops-canary-demo
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+replicaCount: 2
+namespace: apps
+
+service:
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  className: nginx
+  host: argo-cd.faboulaye.dev
+
+rollout:
+  enabled: true
+  canary:
+    steps:
+      - setWeight: 20
+      - pause: { duration: 30 }
+      - setWeight: 50
+      - pause: { duration: 60 }
+      - setWeight: 100
+
+env:
+  name: gitops-canary-demo
+  version: "" # optional runtime overrides (otherwise baked from image)
+  buildTag: ""
+  gitCommit: ""
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: 15s
