@@ -1,6 +1,16 @@
 name: Release
 on:
   workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch or tag to run on
+        required: true
+        default: develop
+      dry_run:
+        description: "Don't publish; just show what would happen"
+        required: true
+        type: boolean
+        default: false
 
 env:
   REGISTRY: ghcr.io
