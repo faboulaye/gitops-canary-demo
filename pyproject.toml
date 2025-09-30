@@ -1,3 +1,31 @@
+[project]
+name = "dummy-api"
+version = "1.0.0-alpha.1"  # Set this to the last released version or "0.0.0" for new projects
+description = "A sample Python package"
+requires-python = ">=3.13"
+
+
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]
+
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
+commit_parser = "conventional"
+
+[tool.semantic_release.branches.main]
+match = "develop"
+
+[tool.semantic_release.branches.alpha]
+match = "^(feat|fix|perf)/.+"
+prerelease = true
+prerelease_token = "alpha"
+
+[tool.semantic_release.branches.temp_fix]
+match = "^fix_release_pipeline$"
+prerelease = true
+prerelease_token = "alpha"
+
+[tool.semantic_release.changelog.default_templates]
+changelog_file = "CHANGELOG.md"
