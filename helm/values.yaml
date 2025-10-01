@@ -1,0 +1,31 @@
+namespace: apps
+
+image:
+  repository: ghcr.io/faboulaye/gitops-canary-demo
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+replicaCount: 3
+
+env:
+  name: gitops-canary-demo
+  version: "latest" # optional runtime overrides (otherwise baked from image)
+  gitCommit: ""
+  gitRepo: "https://github.com/faboulaye/gitops-canary-demo"
+  buildTime: "2023-01-01T00:00:00Z"
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 128Mi
+
+service:
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  host: argo-cd.faboulaye.dev

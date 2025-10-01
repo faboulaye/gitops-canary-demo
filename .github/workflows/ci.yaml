@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - "develop"
-    tags:
-      - "v*.*.*"
 
 env:
   REGISTRY: ghcr.io
@@ -13,7 +11,7 @@ env:
 
 jobs:
   build:
-    name: Build and push Docker image
+    name: Continuous Integration
     runs-on: ubuntu-latest
     permissions:
       contents: read
