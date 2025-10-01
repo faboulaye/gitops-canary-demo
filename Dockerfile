@@ -27,8 +27,10 @@ ENV APP_NAME=${APP_NAME} \
 
 LABEL org.opencontainers.image.title="${APP_NAME}" \
     org.opencontainers.image.description="${APP_DESCRIPTION}" \
+    org.opencontainers.image.source="${GIT_REPO}" \
     org.opencontainers.image.version="${APP_VERSION}" \
-    org.opencontainers.image.revision="${GIT_COMMIT}"
+    org.opencontainers.image.revision="${GIT_COMMIT}" \
+    org.opencontainers.image.created="${BUILD_TIME}"
 
 
 RUN addgroup --system app && adduser --system --ingroup app app

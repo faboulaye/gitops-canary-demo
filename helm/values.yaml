@@ -7,13 +7,6 @@ image:
 
 replicaCount: 3
 
-env:
-  name: gitops-canary-demo
-  version: "latest" # optional runtime overrides (otherwise baked from image)
-  gitCommit: ""
-  gitRepo: "https://github.com/faboulaye/gitops-canary-demo"
-  buildTime: "2023-01-01T00:00:00Z"
-
 resources:
   requests:
     cpu: 50m
