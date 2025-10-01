@@ -2,8 +2,8 @@ version: "3"
 
 # Global variables
 vars:
-  REGISTRY: ghcr.io
-  IMAGE_REPO: "github.io/faboulaye/gitops-canary-demo"
+  GIT_REPO: "https://github.io/faboulaye/gitops-canary-demo"
+  IMAGE_REPO: "ghcr.io/faboulaye/gitops-canary-demo"
   NAMESPACE: apps
   PY: python
   PIP: pip
@@ -46,3 +46,9 @@ tasks:
     cmds:
       - |
         {{.PY}} -m pytest -vv
+
+  helm-template:
+    desc: Render the Helm chart templates locally
+    cmds:
+      - |
+        helm template demo ./helm --namespace {{.NAMESPACE}} --set image.tag={{.APP_VERSION}} --set env.version={{.APP_VERSION}} --set env.gitCommit={{.GIT_COMMIT}} --set env.buildTime=$(date -u +"%Y-%m-%dT%H:%M:%SZ") --set env.gitRepo={{.GIT_REPO}}
